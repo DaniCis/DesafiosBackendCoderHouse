@@ -1,11 +1,11 @@
 console.log('Cliente conectado')
 const socket = io()
 
-socket.on('productosActualizados', function(products) {
-    const productsContainer = document.getElementById('products-container');
+socket.on('productosActualizados', function(productos) {
+  const productsContainer = document.getElementById('products-container');
     productsContainer.innerHTML = '';
 
-    products.forEach(function(product) {
+    productos.forEach(function(product) {
       const div = document.createElement('div');
       div.innerHTML = `
         <p>${product.id}</p>
@@ -15,5 +15,5 @@ socket.on('productosActualizados', function(products) {
         <p>Stock: ${product.stock}</p>
       `;
       productsContainer.appendChild(div);
-    });
+  });
 });

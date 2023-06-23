@@ -27,18 +27,13 @@ router.get('/',async(req,res)=>{
 
 router.get('/realtimeproducts', async(req,res)=>{
     try {
+        const products = await manager.getProducts()
         const socketServer = req.app.get('socketServer');
-        socketServer.on('connection', async socket=>{
+        socketServer.on('connection', socket =>{
             console.log('Cliente conectado')
-        
-            const products = await manager.getProducts()
-            //socket.emit('productosActualizados',{products})
-            res.render('realTimeProducts',{
-                style:'index.css',
-                products  
-            })
-            
+            socket.emit('productosActualizados',products)
         })
+        res.render('realTimeProducts',{ })
     } catch (error) {
         res.status(400).send({status:"Error", error: "Failed to load products"})
     } 
