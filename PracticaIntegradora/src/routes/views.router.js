@@ -1,7 +1,7 @@
 import { Router } from "express";
 import Products from '../dao/dbManagers/products.js'
 import Carts from '../dao/dbManagers/carts.js'
-import Messages from '../dato/dbManagers/messages.js'
+import Messages from '../dao/dbManagers/messages.js'
 
 const productsManager = new Products()
 const cartsManager = new Carts()

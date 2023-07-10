@@ -16,13 +16,13 @@ export default class Messages{
     }
 
     addMessage = async (message) => {
-        let message = await messagesModel.create(message)
-        return message
+        let result = await messagesModel.create(message)
+        return result;
     }
 
     updateMessage = async (id, message) => {
-        let message = await messagesModel.updateOne({_id: id}, message)
-        return message
+        let result = await messagesModel.updateOne({_id: id}, message)
+        return result
     }
 
     deleteMessage = async (id) => {

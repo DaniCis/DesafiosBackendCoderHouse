@@ -22,12 +22,22 @@ export default class Products{
     }
 
     updateProduct = async (id, product) => {
-        let result = await productsModel.updateOne({_id: id}, product)
+        let result = []
+        const exist = await this.getById(id)
+        if(exist.length > 0)
+            result = await productsModel.updateOne({_id: id}, product)
+        else
+            result = false
         return result
     }
 
     deleteProduct = async (id) => {
-        let result = await productsModel.deleteOne({_id: id})
+        let result = []
+        const exist = await this.getById(id)
+        if(exist.length > 0)
+            result = await productsModel.deleteOne({_id: id})
+        else
+            result = false
         return result
     }
 }

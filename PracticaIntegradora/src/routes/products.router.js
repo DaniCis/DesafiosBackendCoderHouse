@@ -13,11 +13,11 @@ router.get('/', async (req, res)=>{
     }
 }) 
 
-router.get('/:id', async (req, res)=>{
+router.get('/:pid', async (req, res)=>{
     try{
-        const id = req.params.id
+        const id = req.params.pid
         let product = await ProductManager.getById(id)
-        if(product)
+        if(product.length > 0)
             res.send({ status:"success", payload: product})
         else
             res.status(400).send({status:"Error", error: `Product with ID ${id} not found`})
@@ -41,9 +41,9 @@ router.post('/', async(req,res)=>{
     }
 })
 
-router.put('/:id', async(req,res)=>{
+router.put('/:pid', async(req,res)=>{
     try{
-        const id = req.params.id
+        const id = req.params.pid
         const { title, description, code, price, stock, category, thumbnails } = req.body
         if (!title || !description || !code || !price || !stock || !category)
 			return res.status(200).send({status:"Error", error: "All fields are required to update a product"});
@@ -51,17 +51,23 @@ router.put('/:id', async(req,res)=>{
             title,description,code,price,stock,category,thumbnails
         }
         const result = await ProductManager.updateProduct(id, newProduct)
-        res.send({ status:"success", payload: result})
+        if(result)
+            res.send({ status:"success", payload: result})
+        else
+            res.status(400).send({status:"Error", error: `Can't update. Product with ID ${id} not found`})
     }catch(e){
         res.status(400).send({status:"Error", error: `Failed to update products. ${e.message}`})
     }
 })
 
-router.delete('/:id', async(req,res)=>{
+router.delete('/:pid', async(req,res)=>{
     try{
-        const id = req.params.id
+        const id = req.params.pid
         const result = await ProductManager.deleteProduct(id)
-        res.send({ status:"success", payload: result})
+        if(result)
+            res.send({ status:"success", payload: result})
+        else
+            res.status(400).send({status:"Error", error: `Can't delete. Product with ID ${id} not found`})
     }catch(e){
         res.status(400).send({status:"Error", error: `Failed to delete product. ${e.message}`})
     }
