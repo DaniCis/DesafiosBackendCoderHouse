@@ -1,6 +1,5 @@
 import cartsModel from '../models/carts.js'
 import productsModel from '../models/products.js'
-import productManager from './products.js'
 
 export default class Carts{
 
@@ -27,18 +26,18 @@ export default class Carts{
         let result = []
         const cart = await this.getById(cartId)
         if(cart.length > 0){
-            const validProduct = await productsModel.find({_id: productId})
+            const validProduct = await productsModel.find({_id: productId })
             if(validProduct.length > 0){
-                //revisar desde aqui
-                const update = { $inc: { "products.$[product].quantity": 1 } }
-                const options = {
-                    arrayFilters: [{ "product._id": productId }],
-                    upsert: true,
+                const existingProductIndex = cart[0].products.findIndex((product) => product._id === productId)
+                if (existingProductIndex !== -1) 
+                    cart[0].products[existingProductIndex].quantity += 1
+                else {
+                    const newProduct = { _id: productId, quantity: 1 }
+                    cart[0].products.push(newProduct)
                 }
-                result = await cartsModel.findOneAndUpdate({ _id: cartId }, update, options)
-                console.log(result)
+                result = await cartsModel.updateOne({ _id: cartId }, { $set: { products: cart[0].products } })
             }else
-            result = false
+                result = false
         }
         else
             result = false
