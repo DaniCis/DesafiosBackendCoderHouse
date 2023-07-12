@@ -6,7 +6,7 @@ export default class Messages{
         console.log('Trabajando con mensajes en mongoDB')
     }
     getAll = async() => {
-        let messages = await messagesModel.find()
+        let messages = await messagesModel.find().lean()
         return messages;
     }
 

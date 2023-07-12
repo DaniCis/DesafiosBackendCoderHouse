@@ -3,8 +3,10 @@
     {{#each carts}}
     <div>
         {{#each products}}
-            <span>{{this.id}}</span>
-            <span>{{this.quantity}}</span>
+        <div>
+            <p>Producto: {{this._id}}</p>
+            <p>Cantidad: {{this.quantity}}</p>
+        </div>
         {{/each}}
     </div>
     {{/each}}

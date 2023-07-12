@@ -8,7 +8,7 @@ export default class Carts{
     }
 
     getAll = async() => {
-        let carts = await cartsModel.find()
+        let carts = await cartsModel.find().lean()
         return carts;
     }
 
