@@ -1,12 +1,12 @@
 import express from "express"
 import __dirname from "./utils.js"
 import mongoose from "mongoose"
+import 'dotenv/config.js'
 import handlebars from 'express-handlebars'
 import viewRouter from './routes/views.router.js'
 import productsRouter from './routes/products.router.js'
 import cartsRouter from './routes/carts.router.js'
 import Messages from './dao/dbManagers/messages.js'
-import 'dotenv/config.js'
 
 import { Server } from "socket.io";
 
@@ -18,7 +18,7 @@ const io = new Server(httpServer)
 const messagesManager = new Messages()
 
 mongoose.set('strictQuery',false)
-const connection = mongoose.connect(`mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PASSWORD}@cluster0.qgrka8e.mongodb.net/${process.env.DB_NAME}?retryWrites=true&w=majority`)
+const connection = mongoose.connect(`mongodb+srv://danicis2:Danicis2@cluster0.qgrka8e.mongodb.net/ecommerce?retryWrites=true&w=majority`)
 
 app.engine('handlebars',handlebars.engine());
 app.set('views',__dirname+'/views')
