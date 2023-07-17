@@ -4,7 +4,7 @@ import productsModel from '../models/products.js'
 export default class Carts{
 
     constructor(){
-        console.log('Trabajando con carritos en mongoDB')
+        //console.log('Trabajando con carritos en mongoDB')
     }
 
     getAll = async() => {
@@ -44,22 +44,33 @@ export default class Carts{
         return result
     }
 
-    updateCart = async (id, cart) => {
+    updateCart = async (id, products) => {
         let result = []
         const exist = await this.getById(id)
         if(exist.length > 0)
-            result = await cartsModel.updateOne({_id: id}, cart)
+            result = await cartsModel.updateOne({_id: id}, products)
         else
             result = false
         return result
     }
 
-    deleteCart = async (id) => {
+    deleteAllProductsInCart = async (id) => {
         let result = []
-        const exist = await this.getById(id)
-        if(exist.length > 0)
-            result = await cartsModel.deleteOne({_id: id})
+        const cart = await this.getById(id)
+        if(cart.length > 0){
+            result = await cartsModel.updateOne({ _id: id }, { $set: { products: [] } })
+        }            
         else
+            result = false
+        return result
+    }
+
+    deleteProductInCart = async (cartId, productId)=>{
+        let result = []
+        const cart = await this.getById(cartId)
+        if(cart.length > 0){
+
+        }else
             result = false
         return result
     }

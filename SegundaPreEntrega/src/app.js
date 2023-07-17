@@ -5,7 +5,7 @@ import 'dotenv/config.js'
 import handlebars from 'express-handlebars'
 import viewRouter from './routes/views.router.js'
 import productsRouter from './routes/products.router.js'
-import cartsRouter from './routes/carts.router.js'
+import cartsRouter from './routes/cart.router.js'
 import Messages from './dao/dbManagers/messages.js'
 
 import { Server } from "socket.io";

@@ -38,7 +38,7 @@ router.post('/', async(req,res)=>{
     }
 })
 
-router.post('/:cid/product/:pid', async(req,res)=>{
+router.post('/:cid/products/:pid', async(req,res)=>{
     try{
         const cartId = req.params.cid
         const productId = req.params.pid
@@ -52,16 +52,53 @@ router.post('/:cid/product/:pid', async(req,res)=>{
     }
 })
 
+router.put('/:cid', async(req,res)=>{
+    try{
+        const cartId = req.params.cid
+        const { products } = req.body
+        const result = await CartsManager.updateCart(products)
+        if(result)
+            res.send({ status:"success", payload: result})
+        else
+            res.status(400).send({status:"Error", error: `Can't update. Cart with ID ${id} not found`})
+    }catch(e){
+        res.status(400).send({status:"Error", error: `Failed to update cart. ${e.message}`})
+    }
+})
+
+router.put('/:cid/products/:pid', async(req,res)=>{
+    try{
+        const cartId = req.params.cid
+        const productId = req.params.pid
+    }catch(e){
+        res.status(400).send({status:"Error", error: `Failed to update product quantity. ${e.message}`})
+    }
+})
+
 router.delete('/:cid', async(req,res)=>{
     try{
         const id = req.params.cid
-        const result = await CartsManager.deleteCart(id)
+        const result = await CartsManager.deleteAllProductsInCart(id)
         if(result)
             res.send({ status:"success", payload: result})
         else
             res.status(400).send({status:"Error", error: `Can't delete. Cart with ID ${id} not found`})
     }catch(e){
-        res.status(400).send({status:"Error", error: `Failed to delete cart. ${e.message}`})
+        res.status(400).send({status:"Error", error: `Failed to delete all products of the cart. ${e.message}`})
+    }
+})
+
+router.delete('/:cid/products/:pid', async(req,res)=>{
+    try{
+        const cartId = req.params.cid
+        const productId = req.params.pid
+        //const result = await CartsManager.deleteProductsInCart(id)
+        if(result)
+            res.send({ status:"success", payload: result})
+        else
+            res.status(400).send({status:"Error", error: `Can't delete. Cart with ID ${id} not found`})
+    }catch(e){
+        res.status(400).send({status:"Error", error: `Failed to delete product in the cart. ${e.message}`})
     }
 })
 
