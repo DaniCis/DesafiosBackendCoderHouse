@@ -8,12 +8,18 @@ export default class Carts{
     }
 
     getAll = async() => {
-        let carts = await cartsModel.find().lean()
+        const carts = await cartsModel.find({}).populate({
+            path: "products",
+            populate: { path: "_id", model: "products" },
+          });
         return carts;
     }
 
     getById = async(id) => {
-        let cart = await cartsModel.find({_id: id})
+        let cart = await cartsModel.find({_id: id}).populate({
+            path: "products",
+            populate: { path: "_id", model: "products" },
+        })
         return cart;
     }
 
@@ -28,7 +34,7 @@ export default class Carts{
         if(cart.length > 0){
             const validProduct = await productsModel.find({_id: productId })
             if(validProduct.length > 0){
-                const existingProductIndex = cart[0].products.findIndex((product) => product._id === productId)
+                const existingProductIndex = cart[0].products.findIndex((product) => product._id.valueOf() === productId)
                 if (existingProductIndex !== -1) 
                     cart[0].products[existingProductIndex].quantity += 1
                 else {
@@ -44,12 +50,43 @@ export default class Carts{
         return result
     }
 
-    updateCart = async (id, products) => {
+    updateCart = async (cartId, products) => {
         let result = []
-        const exist = await this.getById(id)
-        if(exist.length > 0)
-            result = await cartsModel.updateOne({_id: id}, products)
-        else
+        const exist = await this.getById(cartId)
+        if(exist.length > 0){
+            result = await cartsModel.findByIdAndUpdate( cartId, {
+                products: products,
+            })
+        }else
+            result = false
+        return result
+    }
+
+    updateQuantity = async (cartId, productId, cantidad) => {
+        let result = []
+        const cart = await this.getById(cartId)
+        if(cart.length > 0){
+            console.log(cart[0].products)
+            const productIndex = cart[0].products.findIndex(product => product._id.valueOf() === productId)
+            if (productIndex === -1) 
+                return result = false
+            cart[0].products[productIndex].quantity = cantidad
+            result = await cartsModel.updateOne({ _id: cartId}, { $set: cart[0] })
+        }else
+            result = false
+        return result
+    }
+
+    deleteProductInCart = async (cartId, productId)=>{
+        let result = []
+        const cart = await this.getById(cartId)
+        if(cart.length > 0){
+            const productIndex = cart[0].products.findIndex(product => product._id.valueOf() === productId)
+            if (productIndex === -1) 
+                return result = false
+            cart[0].products.splice(productIndex, 1)
+            result = await cartsModel.updateOne({ _id: cartId}, { $set: cart[0] });
+        }else
             result = false
         return result
     }
@@ -61,16 +98,6 @@ export default class Carts{
             result = await cartsModel.updateOne({ _id: id }, { $set: { products: [] } })
         }            
         else
-            result = false
-        return result
-    }
-
-    deleteProductInCart = async (cartId, productId)=>{
-        let result = []
-        const cart = await this.getById(cartId)
-        if(cart.length > 0){
-
-        }else
             result = false
         return result
     }

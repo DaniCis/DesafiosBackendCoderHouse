@@ -5,9 +5,16 @@ import productsModel from "../dao/models/products.js";
 const router = Router()
 const ProductManager = new Products()
 
+/**
+ * http://localhost:8080/products?limit=5
+ * http://localhost:8080/products?query=ropa
+ * http://localhost:8080/products?query=false
+   http://localhost:8080/products?query=ropa&limit=2
+   http://localhost:8080/products?query=false&sort=desc
+ */
 router.get('/', async (req, res)=>{
     try{
-        const {limit = 1, page = 1, sort , query} = req.query
+        const {limit = 10, page = 1, sort , query} = req.query
         const filter ={}
         if (query) {
             filter.$or = [

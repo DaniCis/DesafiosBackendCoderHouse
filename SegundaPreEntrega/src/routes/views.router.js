@@ -2,13 +2,14 @@ import { Router } from "express";
 import Carts from '../dao/dbManagers/carts.js'
 import Messages from '../dao/dbManagers/messages.js'
 import productsModel from "../dao/models/products.js";
+import mongoose from "mongoose";
 
 const cartsManager = new Carts()
 const messagesManager = new Messages()
 const router = Router()
 
 router.get('/products', async (req,res) => {
-    const {limit = 1, page = 1, sort , query} = req.query
+    const {limit = 10, page = 1, sort , query} = req.query
         const filter ={}
         if (query) {
             filter.$or = [
@@ -37,9 +38,23 @@ router.get('/products', async (req,res) => {
 })
 
 router.get('/carts/:cid', async(req,res) => {
-    const { id } = parseInt(req.query.cid)
-    let cart = await cartsManager.getById(id)
-    res.render('cart', {cart})
+    try{
+        const id  = req.params.cid
+        if (!mongoose.Types.ObjectId.isValid(id)) {
+            return res.status(400).send('ID de carrito no válido');
+          }
+      
+        let cart = await cartsManager.getById(id)
+        if (!cart || cart.length === 0) {
+            return res.status(404).send('Carrito no encontrado');
+          }
+      
+        let products = cart[0].products
+        console.log(products)
+        res.render('carts', {products})
+    }catch(e){
+        console.error(e)
+    }
 })
 
 router.get("/chat", async(req, res) => {

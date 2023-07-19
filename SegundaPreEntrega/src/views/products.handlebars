@@ -8,22 +8,17 @@
         <p>Stock: {{this.stock}}</p>
         <p>Categoría: {{this.category}}</p>
         <p>Status: {{this.status}}</p>
-        <a>
-            <button>Añadir al carrito</button>
-        </a>
+        <button>Añadir al carrito</button>
+        <br/><br/>
     </div>
     {{/each}}
-
-    <p></p>
-    <p></p>
-    
+    <br/><br/>
     <div>
         {{#if hasPrevPage}}
             <a href={{prevLink}}>
                 <button>Anterior</button>
             </a>
         {{/if}}
-
         {{#if hasNextPage}}
             <a href={{nextLink}}>
                 <button>Siguiente</button>
