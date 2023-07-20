@@ -11,7 +11,7 @@ export default class Carts{
         const carts = await cartsModel.find({}).populate({
             path: "products",
             populate: { path: "_id", model: "products" },
-          });
+          }).lean()
         return carts;
     }
 
@@ -19,7 +19,7 @@ export default class Carts{
         let cart = await cartsModel.find({_id: id}).populate({
             path: "products",
             populate: { path: "_id", model: "products" },
-        })
+        }).lean()
         return cart;
     }
 

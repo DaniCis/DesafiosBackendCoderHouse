@@ -36,22 +36,26 @@ router.get('/products', async (req,res) => {
             nextLink: products.hasNextPage ? `http://localhost:8080/products?page=${products.nextPage}` : ''
         })
 })
-
+  
 router.get('/carts/:cid', async(req,res) => {
     try{
         const id  = req.params.cid
-        if (!mongoose.Types.ObjectId.isValid(id)) {
-            return res.status(400).send('ID de carrito no válido');
-          }
-      
+        if (!mongoose.Types.ObjectId.isValid(id)) 
+            return res.status(400).send('ID de carrito no válido')
         let cart = await cartsManager.getById(id)
-        if (!cart || cart.length === 0) {
-            return res.status(404).send('Carrito no encontrado');
-          }
-      
-        let products = cart[0].products
-        console.log(products)
-        res.render('carts', {products})
+        if (!cart || cart.length === 0) 
+            return res.status(404).send('Carrito no encontrado')
+        if(cart[0].products.length === 0)
+            return res.status(404).send('Carrito vacio')
+        const data = {
+            products: cart[0].products.map((product) => ({
+                quantity: product.quantity,
+                title: product._id.title,
+                description: product._id.description,
+                price: product._id.price,
+            })),
+        }
+        res.render('carts', {data})
     }catch(e){
         console.error(e)
     }
