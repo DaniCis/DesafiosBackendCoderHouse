@@ -17,7 +17,11 @@ form.addEventListener('submit', e =>{
         if(result.status===200){
             window.location.replace('/products')
         }else{
-            console.log('Credenciales incorrectas')
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'Credenciales incorrectas',
+            })
         }
     })
 })

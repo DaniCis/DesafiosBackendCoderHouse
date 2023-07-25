@@ -14,5 +14,12 @@ form.addEventListener('submit', e =>{
             'Content-Type':'application/json'
         }
     }).then(result=>result.json())
-    .then(json=>console.log(json))     
+    .then(json=>{
+        console.log(json)
+        Swal.fire({
+            icon: 'success',
+            title: 'Registro exitoso',
+            text: 'Usuario creado. Inicia sesión',
+        })
+    })     
 })
