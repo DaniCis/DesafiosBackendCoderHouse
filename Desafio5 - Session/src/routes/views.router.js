@@ -24,7 +24,8 @@ router.get('/products', async (req,res) => {
             lean: true
         }
         const products = await productsModel.paginate(filter,options)
-        res.render('products',{ 
+        res.render('products',{     
+            user: req.session.user,
             products: products.docs, 
             totalPages: products.totalPages,
             prevPage: products.prevPage,
@@ -64,20 +65,32 @@ router.get('/carts/:cid', async(req,res) => {
 router.get("/chat", async(req, res) => {
     let messages = await messagesManager.getAll()
 	res.render("chat", {messages})
-});
+})
 
 router.get("/register", (req, res) => {
     res.render("register");
-});
-  
-router.get("/login", (req, res) => {
-    res.render("login");
-});
+})
   
 router.get("/", (req, res) => {
+    res.render("login");
+})
+  
+router.get("/profile", (req, res) => {
     res.render("profile", {
       user: req.session.user,
-    });
-});
+    })
+})
+
+router.get('/logout',(req,res)=>{
+    req.session.destroy(err=>{
+        if(!err){
+            //res.send({status: 'succes', message: 'Sesion cerrada con exito'})
+            res.render('login')
+        }
+        else res.send({status:'error', message: 'Problema al cerrar sesion'})
+    })
+})
+
+
 
 export default router;
