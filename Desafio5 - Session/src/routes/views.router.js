@@ -46,16 +46,16 @@ router.get('/carts/:cid', async(req,res) => {
         let cart = await cartsManager.getById(id)
         if (!cart || cart.length === 0) 
             return res.status(404).send('Carrito no encontrado')
-        if(cart[0].products.length === 0)
+        if(cart.products.length === 0)
             return res.status(404).send('Carrito vacio')
-        const data = {
-            products: cart[0].products.map((product) => ({
-                quantity: product.quantity,
-                title: product._id.title,
-                description: product._id.description,
-                price: product._id.price,
-            })),
-        }
+            const data = {
+                products: cart.products.map((product) => ({
+                    quantity: product.quantity,
+                    title: product._id.title,
+                    description: product._id.description,
+                    price: product._id.price,
+                })),
+            }
         res.render('carts', {data})
     }catch(e){
         console.error(e)
