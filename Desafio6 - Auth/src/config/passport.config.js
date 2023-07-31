@@ -9,13 +9,17 @@ const localStrategy = local.Strategy;
 const initPassport =() =>
 {
     passport.serializeUser((user,done)=>{
-        done(null,user._id)
+        done(null,user)
     });
     
     passport.deserializeUser(async(id,done)=>{
         //let user = await githubService.findById(id);
-        let user = await userModel.findById(id)
-        done(null,user);
+        try {
+            const user = await userModel.findById(id);
+            done(null, user);
+        } catch (error) {
+            done(error, null);
+        }
     })
 
     passport.use("register", new localStrategy({ 
