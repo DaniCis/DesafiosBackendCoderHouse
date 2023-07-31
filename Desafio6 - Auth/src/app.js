@@ -32,7 +32,6 @@ app.use(express.static(__dirname + "/public"));
 app.use(session({
     store: MongoStore.create({
       mongoUrl:"mongodb+srv://danicis2:Danicis2@cluster0.qgrka8e.mongodb.net/ecommerce?retryWrites=true&w=majority",
-      mongoOptions:{ useNewUrlParser:true, useUnifiedTopology:true},
       ttl:3600
     }),
     secret:"12345abcd",
@@ -53,7 +52,7 @@ app.use(express.urlencoded({extended:true}))
 app.use('/',viewRouter)
 app.use('/api/products', productsRouter)
 app.use('/api/carts', cartsRouter)
-app.use('/api/sessions',sessionRouter)
+app.use('/api/session',sessionRouter)
 
 const messages=[];
 io.on('connection',socket=>{
