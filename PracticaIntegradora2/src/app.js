@@ -39,7 +39,6 @@ app.use(session({
     saveUninitialized:false
 }))
 
-
 initPassport();
 app.use(passport.session({
     secret:"SecretCoders"
