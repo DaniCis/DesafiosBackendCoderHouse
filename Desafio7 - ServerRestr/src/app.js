@@ -50,7 +50,7 @@ app.use(passport.initialize());
 app.use(express.json())
 app.use(express.urlencoded({extended:true}))
 //app.use('/',viewRouter)
-//app.use('/api/products', productsRouter)
+app.use('/api/products', productsRouter)
 //app.use('/api/carts', cartsRouter)
 //app.use('/api/session',sessionRouter)
 
