@@ -1,11 +1,18 @@
+import { config } from 'dotenv';
 import passport from "passport";
 import local from "passport-local";
 import userModel from "../model/users.model.js"
 import githubService from 'passport-github2';
 import { createHash, isValidPassword } from "../utils/utils.js";
-import {ADMIN_PASS, ADMIN_USERNAME,GIT_CLIENT_SECRET,GIT_CLIENT_ID } from './config.js'
+
+config();
+const ADMIN_USERNAME= process.env.ADMIN_USERNAME
+const ADMIN_PASS= process.env.ADMIN_PASS
+const GIT_CLIENT_ID= process.env.GIT_CLIENT_ID
+const GIT_CLIENT_SECRET=process.env.GIT_CLIENT_SECRET
 
 const localStrategy = local.Strategy;
+
 
 const initPassport =() =>
 {

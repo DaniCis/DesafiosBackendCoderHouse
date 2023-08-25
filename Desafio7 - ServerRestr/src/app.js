@@ -1,3 +1,4 @@
+import { config } from 'dotenv';
 import express from "express"
 import __dirname from "./utils/utils.js"
 import mongoose from "mongoose"
@@ -7,7 +8,12 @@ import handlebars from 'express-handlebars'
 import passport from "passport";
 import initPassport from "./config/passport.config.js"
 import { Server } from "socket.io";
-import { MONGO_USERNAME, MONGO_PASS, MONGO_DBNAME, PORT} from './config/config.js'
+
+config();
+const PORT= process.env.PORT
+const MONGO_USERNAME= process.env.MONGO_USERNAME
+const MONGO_PASS= process.env.MONGO_PASS
+const MONGO_DBNAME= process.env.MONGO_DBNAME
 
 const app = express();
 const puerto = PORT;
