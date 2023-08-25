@@ -1,5 +1,5 @@
 import {Router} from "express"
-import userModel from "../model/users.model";
+import userModel from "../model/users.model.js";
 import passport from "passport";
 import { createHash } from "../utils/utils.js"
 

@@ -4,7 +4,6 @@ import messagesController from '../controllers/messages.controller.js'
 import productsModel from "../model/products.model.js";
 import mongoose from "mongoose";
 
-
 const router = Router()
 
 router.get('/products', async (req,res) => {

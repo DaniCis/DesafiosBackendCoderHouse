@@ -12,4 +12,4 @@ cartRouter.put('/:cid/products/:pid',cartsController.updateQuantity)
 cartRouter.delete('/:cid/products/:pid',cartsController.deleteProductInCart)
 cartRouter.delete('/:cid',cartsController.deleteAllProductsInCart)
 
-export default messageRouter;
+export default cartRouter;
