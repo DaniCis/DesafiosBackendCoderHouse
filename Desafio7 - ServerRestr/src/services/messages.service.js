@@ -19,7 +19,7 @@ class MessageService{
         }
     }
     
-    createMessage = async()=>{
+    createMessage = async(message)=>{
         try{
             let result = await messagesModel.create(message)
             return result;

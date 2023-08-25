@@ -3,38 +3,54 @@ import productsModel from '../model/products.model.js'
 class ProductService{
     getProducts = async()=>{
         try{
-
-        }catch(e){
-            throw new Error(error.message)
-        }
-    }
-    getProductById = async(id)=>{
-        try{
-
-        }catch(e){
-            throw new Error(error.message)
-        }
-    }
-
-    createProduct = async()=>{
-        try{
-
-        }catch(e){
-            throw new Error(error.message)
-        }
-    }
-
-    updateProduct = async()=>{
-        try{
-
+            let products = await productsModel.find().lean()
+            return products
         }catch(e){
             throw new Error(error.message)
         }
     }
     
-    deleteProduct = async() =>{
+    getProductById = async(id)=>{
         try{
+            let product = await productsModel.findOne({_id: id})
+            return product;
+        }catch(e){
+            throw new Error(error.message)
+        }
+    }
 
+    createProduct = async(product)=>{
+        try{
+            let result = await productsModel.create(product)
+            return result
+        }catch(e){
+            throw new Error(error.message)
+        }
+    }
+
+    updateProduct = async(id, product)=>{
+        try{
+            let result = []
+            const exist = await this.getProductById(id)
+            if(exist)
+                result = await productsModel.updateOne({_id: id}, product)
+            else
+                result = false
+            return result
+        }catch(e){
+            throw new Error(error.message)
+        }
+    }
+
+    deleteProduct = async(id) =>{
+        try{
+            let result = []
+            const exist = await this.getProductById(id)
+            if(exist)
+                result = await productsModel.deleteOne({_id: id})
+            else
+                result = false
+            return result
         }catch(e){
             throw new Error(error.message)
         }
