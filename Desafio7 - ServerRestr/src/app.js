@@ -1,4 +1,5 @@
 import { config } from 'dotenv';
+import { Server } from "socket.io";
 import express from "express"
 import __dirname from "./utils/utils.js"
 import mongoose from "mongoose"
@@ -7,7 +8,8 @@ import MongoStore from "connect-mongo";
 import handlebars from 'express-handlebars'
 import passport from "passport";
 import initPassport from "./config/passport.config.js"
-import { Server } from "socket.io";
+import messagesController from './controllers/messages.controller.js';
+import productsRouter from './routers/products.router.js';
 
 config();
 const PORT= process.env.PORT
@@ -19,8 +21,6 @@ const app = express();
 const puerto = PORT;
 const httpServer = app.listen(puerto,()=>console.log("Server up"))
 const io = new Server(httpServer)
-
-//const messagesManager = new Messages()
 
 mongoose.set('strictQuery',false)
 const connection = mongoose.connect(`mongodb+srv://${MONGO_USERNAME}:${MONGO_PASS}@cluster0.qgrka8e.mongodb.net/${MONGO_DBNAME}?retryWrites=true&w=majority`)
@@ -56,10 +56,10 @@ app.use(express.urlencoded({extended:true}))
 
 
 const messages=[];
-/*io.on('connection',socket=>{
+io.on('connection',socket=>{
     socket.on('message', data=>{
         messages.push(data)
         io.emit('messageLogs',messages)
-        messagesManager.addMessage(data)
+        messagesController.createMessage(data)
     })
-})*/
+})

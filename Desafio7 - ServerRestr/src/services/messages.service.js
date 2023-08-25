@@ -6,7 +6,7 @@ class MessageService{
             const messages = await messagesModel.find().lean()
             return messages
         }catch{
-            throw new Error(error.message)
+            throw new Error(e.message)
         }
     }
 
@@ -15,7 +15,7 @@ class MessageService{
             let message = await messagesModel.find({_id: id})
             return message;
         }catch(e){
-            throw new Error(error.message)
+            throw new Error(e.message)
         }
     }
     
@@ -24,7 +24,7 @@ class MessageService{
             let result = await messagesModel.create(message)
             return result;
         }catch(e){
-            throw new Error(error.message)
+            throw new Error(e.message)
         }
     }
     
@@ -33,7 +33,7 @@ class MessageService{
             let result = await messagesModel.updateOne({_id: id}, message)
             return result
         }catch(e){
-            throw new Error(error.message)
+            throw new Error(e.message)
         }
     }
     
@@ -42,7 +42,7 @@ class MessageService{
             let message = await messagesModel.deleteOne({_id: id})
             return message
         }catch(e){
-            throw new Error(error.message)
+            throw new Error(e.message)
         }
     }
 }

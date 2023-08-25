@@ -10,7 +10,7 @@ class CartService{
             }).lean()
             return carts;
         }catch(e){
-            throw new Error(error.message)
+            throw new Error(e.message)
         }
     }
 
@@ -22,7 +22,7 @@ class CartService{
             }).lean()
             return cart;
         }catch(e){
-            throw new Error(error.message)
+            throw new Error(e.message)
         }
     }
 
@@ -31,7 +31,7 @@ class CartService{
             let result = await cartsModel.create(cart)
             return result
         }catch(e){
-            throw new Error(error.message)
+            throw new Error(e.message)
         }
     }
     
@@ -57,7 +57,7 @@ class CartService{
                 result = false
             return result
         }catch(e){
-            throw new Error(error.message)
+            throw new Error(e.message)
         }
     }
 
@@ -73,7 +73,7 @@ class CartService{
                 result = false
             return result
         }catch(e){
-            throw new Error(error.message)
+            throw new Error(e.message)
         }
     }
 
@@ -91,7 +91,7 @@ class CartService{
                 result = false
             return result
         }catch(e){
-            throw new Error(error.message)
+            throw new Error(e.message)
         }
     }
 
@@ -109,7 +109,7 @@ class CartService{
                 result = false
             return result
         }catch(e){
-            throw new Error(error.message)
+            throw new Error(e.message)
         }
     }
 
@@ -124,7 +124,7 @@ class CartService{
                 result = false
             return result
         }catch(e){
-            throw new Error(error.message)
+            throw new Error(e.message)
         }
     }
 }

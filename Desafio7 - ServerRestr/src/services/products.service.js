@@ -6,7 +6,7 @@ class ProductService{
             let products = await productsModel.find().lean()
             return products
         }catch(e){
-            throw new Error(error.message)
+            throw new Error(e.message)
         }
     }
     
@@ -15,7 +15,7 @@ class ProductService{
             let product = await productsModel.findOne({_id: id})
             return product;
         }catch(e){
-            throw new Error(error.message)
+            throw new Error(e.message)
         }
     }
 
@@ -24,7 +24,7 @@ class ProductService{
             let result = await productsModel.create(product)
             return result
         }catch(e){
-            throw new Error(error.message)
+            throw new Error(e.message)
         }
     }
 
@@ -38,7 +38,7 @@ class ProductService{
                 result = false
             return result
         }catch(e){
-            throw new Error(error.message)
+            throw new Error(e.message)
         }
     }
 
@@ -52,7 +52,7 @@ class ProductService{
                 result = false
             return result
         }catch(e){
-            throw new Error(error.message)
+            throw new Error(e.message)
         }
     }
 }

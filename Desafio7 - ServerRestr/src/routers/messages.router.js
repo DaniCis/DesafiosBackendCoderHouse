@@ -1,9 +1,10 @@
-import { Router }from "express"
+import { Router } from "express"
+import messagesController from "../controllers/messages.controller.js";
  
 class MessageRouter{
     constructor(){
         this.InicioMensaje= Router();
-        //this.InicioMensaje.get('/',toyController.getToy)
+        this.InicioMensaje.get('/chat',messagesController.getMessages)
     }
     getRouter(){
         return this.InicioMensaje
