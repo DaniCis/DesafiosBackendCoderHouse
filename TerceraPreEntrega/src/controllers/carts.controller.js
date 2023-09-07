@@ -1,4 +1,4 @@
-import cartService from '../services/carts.service.js'
+import {cartService} from '../services/index.js'
 
 class CartController{
 
@@ -92,6 +92,7 @@ class CartController{
             res.status(400).send({status:"Error", error: `Failed to delete product in the cart. ${e.message}`})
         }
     }
+
     
     deleteAllProductsInCart =async(req,res)=>{
         try{
@@ -103,6 +104,16 @@ class CartController{
                 res.status(400).send({status:"Error", error: `Can't delete. Cart with ID ${id} not found`})
         }catch(e){
             res.status(400).send({status:"Error", error: `Failed to delete all products of the cart. ${e.message}`})
+        }
+    }
+
+    purchaseCart =async (req, res) => {
+        const { cid } = req.params;
+        try {
+            const ticket = await cartService.purchaseCart(cid);
+            res.send({ status:"success", payload: ticket})
+        } catch (error) {
+            res.status(400).send({status:"Error", error: `Failed to complete purchase. ${e.message}`})
         }
     }
 }

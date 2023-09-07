@@ -1,4 +1,4 @@
-import messageService from '../services/messages.service.js'
+import {messageService }from '../services/index.js'
 
 class MessageController{
     
@@ -17,7 +17,7 @@ class MessageController{
             const result = await messageService.createMessage(message)
             res.send({ status:"success", payload: result})
         }catch(e){
-            res.status(400).send({status:"Error", error: `Failed to load messages. ${e.message}`})
+            res.status(400).send({status:"Error", error: `Failed to add messages. ${e.message}`})
         }
     }
 }

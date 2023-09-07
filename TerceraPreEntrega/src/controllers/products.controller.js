@@ -1,5 +1,5 @@
-import productService from '../services/products.service.js'
-import productsModel from '../model/products.model.js'
+import{ productService} from '../services/index.js'
+import productsModel from '../dao/models/products.models.js'
 
 class ProductController{
     getProducts =async(req,res)=>{
