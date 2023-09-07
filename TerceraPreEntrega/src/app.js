@@ -11,8 +11,6 @@ import passport from "passport";
 import initPassport from "./config/passport.config.js"
 import messagesController from './controllers/messages.controller.js';
 import appRouter from './routers/app.router.js'
-import sessionRouter from './routers/sessions.router.js';
-
 
 const{ PORT, MONGO_URI } = CONFIG
 const app= express();
@@ -54,8 +52,7 @@ app.use(passport.session({
   secret:"SecretCoders"
 }));
 
-app.use(passport.initialize());
-app.use('/api/session',sessionRouter)
+app.use(passport.initialize())
 app.use ('/api' ,appRouter)
 
 
