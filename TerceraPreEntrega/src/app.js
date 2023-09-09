@@ -3,7 +3,6 @@ import CONFIG from "./config/config.js"
 import cors from 'cors'
 import mongoose from "mongoose"
 import { Server } from "socket.io"
-import __dirname from "./utils/utils.js"
 import session from "express-session";
 import MongoStore from "connect-mongo";
 import handlebars from 'express-handlebars'
@@ -11,7 +10,11 @@ import passport from "passport";
 import initPassport from "./config/passport.config.js"
 import messagesController from './controllers/messages.controller.js';
 import appRouter from './routers/app.router.js'
+import { fileURLToPath } from "url";
+import { dirname } from "path";
 
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = dirname(__filename)
 const{ PORT, MONGO_URI } = CONFIG
 const app= express();
 
@@ -53,7 +56,7 @@ app.use(passport.session({
 }));
 
 app.use(passport.initialize())
-app.use ('/api' ,appRouter)
+app.use ('/' ,appRouter)
 
 
 const messages=[];

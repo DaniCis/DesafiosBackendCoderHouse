@@ -8,11 +8,11 @@ import sessionRouter from './sessions.router.js'
 
 const router = Router ()
 
-router.use('/users', usersRouter)
-router.use('/products',productsRouter)
-router.use('/messages',messagesRouter)
-router.use('/carts',cartsRouter)
+router.use('/api/users', usersRouter)
+router.use('/api/products',productsRouter)
+router.use('/api/messages',messagesRouter)
+router.use('/api/carts',cartsRouter)
 router.use('/',viewRouter)
-router.use('/session', sessionRouter)
+router.use('/api/session', sessionRouter)
 
 export default router

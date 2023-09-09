@@ -1,4 +1,4 @@
-import { createHash } from "../utils/utils.js";
+import { createHash } from "../utils/bycript.js";
 import{ userService } from '../services/index.js'
 
 class UserController{

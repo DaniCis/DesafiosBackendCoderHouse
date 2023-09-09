@@ -3,7 +3,7 @@ import passport from "passport";
 import local from "passport-local";
 import userModel from "../dao/models/users.models.js"
 import githubService from 'passport-github2';
-import { createHash, isValidPassword } from "../utils/utils.js";
+import { createHash, isValidPassword } from "../utils/bycript.js";
 import CONFIG from "./config.js";
 
 const{ ADMIN_USERNAME, ADMIN_PASS,GIT_CLIENT_ID,GIT_CLIENT_SECRET} = CONFIG
