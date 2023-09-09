@@ -18,32 +18,33 @@ export default class CartsRepository {
         return result;
     };
 
-    addProduct = (cid, pid) => {
-        let result = this.dao.addProduct(cid, pid);
+    addProductToCart = (cid, pid) => {
+        let result = this.dao.addProductToCart(cid, pid);
         return result;
     };
 
-    deleteProducts = (cid) => {
-        let result = this.dao.deleteProducts(cid);
+    deleteAllProductsInCart = (cid) => {
+        let result = this.dao.deleteAllProductsInCart(cid);
         return result;
     };
 
-    deleteProduct = (cid, pid) => {
-        let result = this.dao.deleteProduct(cid, pid);
+    deleteProductInCart = (cid, pid) => {
+        let result = this.dao.deleteProductInCart(cid, pid);
         return result;
     };
 
-    updateProducts = (cid, products) => {
-        let result = this.dao.updateProducts(cid, products);
+    updateCart = (cid, products) => {
+        let result = this.dao.updateCart(cid, products);
         return result;
     };
 
-    updateProduct = (cid, pid, quantity) => {
-        let result = this.dao.updateProduct(cid, pid, quantity);
+    updateQuantity = (cid, pid, quantity) => {
+        let result = this.dao.updateQuantity(cid, pid, quantity);
         return result;
     };
-    generateTicket = (ticket) => {
-        let result = this.dao.generateTicket(ticket);
+
+    purchaseCart = (cid) => {
+        let result = this.dao.purchaseCart(cid);
         return result;
-    };
+    }
 }

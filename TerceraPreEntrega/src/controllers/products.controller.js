@@ -40,7 +40,7 @@ class ProductController{
         try{
             const id = req.params.pid
             let product = await productService.getProductById(id)
-            if(product)
+            if(product) 
                 res.send({ status:"Success", payload: product})
             else
                 res.status(400).send({status:"Error", error: `Product with ID ${id} not found`})

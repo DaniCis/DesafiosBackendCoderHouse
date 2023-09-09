@@ -1,4 +1,5 @@
-import {cartService} from '../services/index.js'
+import {cartService, productService, ticketService} from '../services/index.js'
+import {faker} from '@faker-js/faker';
 
 class CartController{
 
@@ -107,12 +108,38 @@ class CartController{
         }
     }
 
-    purchaseCart =async (req, res) => {
-        const { cid } = req.params;
+    purchaseCart = async(req, res) => {
+        const { cid } = req.params
         try {
-            const ticket = await cartService.purchaseCart(cid);
-            res.send({ status:"success", payload: ticket})
-        } catch (error) {
+            let cart = await cartService.getCartById(cid)
+            let cartProducts = cart.products
+            let ticketTotal = 0
+            let valid = false
+
+            cartProducts.forEach(product => {
+                if (product.quantity <= product._id.stock) {
+                    let currentProduct = product._id
+                    currentProduct.stock -= product.quantity
+                    ticketTotal+= currentProduct.price*product.quantity
+                    productService.updateProduct(product._id._id, currentProduct)
+                    cartProducts.splice(cartProducts.findIndex(element => element._id._id == currentProduct._id), 1)
+                    valid = true
+                }
+            })
+
+            if (!valid) return res.send({status: 400, message: "Cart is empty"});
+
+            cart.products = cartProducts;
+            cartService.updateCart(cart._id, cart);
+
+            let date = new Date(Date.now()).toLocaleString();
+            let code = faker.database.mongodbObjectId();
+            let user = req.user.user.email;
+
+            ticketService.createTicket({code, purchaser: user, purchase_datetime: date, amount: ticketTotal})
+
+            res.send({status: "Success", payload: {code, purchaser: user, purchase_datetime: date, amount: ticketTotal}});
+        } catch(e) {
             res.status(400).send({status:"Error", error: `Failed to complete purchase. ${e.message}`})
         }
     }

@@ -6,17 +6,17 @@ export default class Products{
         //console.log('Trabajando con productos en mongoDB')
     }
 
-    getAll = async() => {
+    getProducts = async() => {
         let products = await productsModel.find().lean()
         return products;
     }
 
-    getById = async(id) => {
+    getProductById = async(id) => {
         let product = await productsModel.findOne({_id: id})
         return product;
     }
 
-    addProduct = async (product) => {
+    createProduct = async (product) => {
         let result = await productsModel.create(product)
         return result
     }

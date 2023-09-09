@@ -7,7 +7,7 @@ export default class Carts{
         //console.log('Trabajando con carritos en mongoDB')
     }
 
-    getAll = async() => {
+    getCarts = async() => {
         const carts = await cartsModel.find({}).populate({
             path: "products",
             populate: { path: "_id", model: "products" },
@@ -15,7 +15,7 @@ export default class Carts{
         return carts;
     }
 
-    getById = async(id) => {
+    getCartById = async(id) => {
         let cart = await cartsModel.findOne({_id: id}).populate({
             path: "products",
             populate: { path: "_id", model: "products" },
@@ -23,7 +23,7 @@ export default class Carts{
         return cart;
     }
 
-    addCart = async (cart) => {
+    createCart = async (cart) => {
         let result = await cartsModel.create(cart)
         return result
     }
@@ -52,7 +52,7 @@ export default class Carts{
 
     updateCart = async (cartId, products) => {
         let result = []
-        const exist = await this.getById(cartId)
+        const exist = await this.getCartById(cartId)
         if(exist){
             result = await cartsModel.findByIdAndUpdate( cartId, {
                 products: products,
@@ -64,7 +64,7 @@ export default class Carts{
 
     updateQuantity = async (cartId, productId, cantidad) => {
         let result = []
-        const cart = await this.getById(cartId)
+        const cart = await this.getCartById(cartId)
         if(cart){
             const productIndex = cart.products.findIndex(product => product._id._id.valueOf() === productId)
             if (productIndex === -1) 
@@ -78,7 +78,7 @@ export default class Carts{
 
     deleteProductInCart = async (cartId, productId)=>{
         let result = []
-        const cart = await this.getById(cartId)
+        const cart = await this.getCartById(cartId)
         if(cart){
             const productIndex = cart.products.findIndex(product => product._id._id.valueOf() === productId)
             if (productIndex === -1) 
@@ -92,7 +92,7 @@ export default class Carts{
 
     deleteAllProductsInCart = async (id) => {
         let result = []
-        const cart = await this.getById(id)
+        const cart = await this.getCartById(id)
         if(cart){
             result = await cartsModel.updateOne({ _id: id }, { $set: { products: [] } })
         }            
