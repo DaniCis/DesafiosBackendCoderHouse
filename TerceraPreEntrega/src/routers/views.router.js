@@ -21,8 +21,8 @@ router.get('/products', async (req,res) => {
             sort: sort === 'asc' ? { price: 1 } : sort === 'desc' ? { price: -1 } : undefined,
             lean: true
         }
-        if (req.isAuthenticated()) {
-            const user = req.session.passport.user
+        const user = req.session.user
+        if (user) {
             const products = await productsModel.paginate(filter,options)
             res.render('products',{     
                 user: user,
@@ -71,35 +71,33 @@ router.get("/chat", async(req, res) => {
 })
 
 router.get("/register", (req, res) => {
-    res.render("register");
+    res.render("register")
 })
   
 router.get("/", (req, res) => {
-    res.render("login");
+    res.render("login")
 })
   
 router.get("/profile", (req, res) => {
-    if (req.isAuthenticated()) {
+    if (req.session.user) {
         res.render("profile", {
             user: req.session.user,
         })
     } else 
-        res.redirect('/');
+        res.redirect('/')
 })
 
 router.get('/resetPassword',(req,res)=>{
-    res.render('resetPassword');
+    res.render('resetPassword')
 })
 
 router.get('/logout',(req,res)=>{
     req.session.destroy(err=>{
         if(!err){
-            res.redirect('/');
+            res.redirect('/')
         }
         else res.send({status:'error', message: 'Problema al cerrar sesion'})
     })
 })
-
-
 
 export default router;
