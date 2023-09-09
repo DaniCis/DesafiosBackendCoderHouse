@@ -4,12 +4,12 @@ export default class MessagesRepository {
     }
 
     getMessages = () => {
-        let result = this.dao.getMessages();
+        let result = this.dao.getMessages()
         return result;
-    };
+    }
 
-    addMessage = (newMessage) => {
-        let result = this.dao.addMessage(newMessage);
+    createMessage = (newMessage) => {
+        let result = this.dao.createMessage(newMessage);
         return result;
-    };
+    }
 }

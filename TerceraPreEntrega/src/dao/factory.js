@@ -20,8 +20,8 @@ switch (DATASOURCE) {
         messages = messagesMongo;
         break;
     case "MEMORY":
-        const {default: cartsMemory} = await import('./memory/cartManager.js')
-        const {default: productsMemory} = await import('./memory/productManager.js')
+        const {default: cartsMemory} = await import('./fileManagers/CartManager.js')
+        const {default: productsMemory} = await import('./fileManagers/ProductManager.js')
         carts = cartsMemory;
         products = productsMemory;
         break;

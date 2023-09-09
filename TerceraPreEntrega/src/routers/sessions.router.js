@@ -21,13 +21,13 @@ router.post('/register',
     passport.authenticate('register',{
         passReqToCallback: true,
         session: false,
-        failureRedirect:'/error',
+        failureRedirect:'/failRegister',
         failureMessage: true,
     }),async(req,res)=>{
     res.send({status:"success",message:"Usuario registrado", payload: req.user})
 })
 
-router.get('/error',async(req,res)=>{
+router.get('/failRegister',async(req,res)=>{
     res.send({status:'error',error:"Registro fallido"})
 })
 
@@ -35,19 +35,19 @@ router.post('/',
     passport.authenticate('login',{
         passReqToCallback: true,
         session: false,
-        failureRedirect:'/error',
+        failureRedirect:'/failLogin',
         failureMessage: true,
     }),async(req,res)=>{
     res.send({status:"success",message:"Usuario iniciado"})
 })
 
-router.get('/error',async(req,res)=>{
+router.get('/failLogin',async(req,res)=>{
     res.send({status:'error',error:"Inicio de sesión fallido"})
 })
 
 router.get('/github',passport.authenticate('github',{scope:['user:email']}))
 
-router.get('/githubcallback', passport.authenticate('github', { failureRedirect: '/error' }), (req, res) => {
+router.get('/githubcallback', passport.authenticate('github', { failureRedirect: '/failLogin' }), (req, res) => {
   req.session.user = req.user;
   res.redirect('/products');
 });
