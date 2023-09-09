@@ -6,34 +6,34 @@ export default class Users{
         //console.log('Trabajando con usuarios en mongoDB')
     }
 
-    getAll = async() => {
+    getusers= async() => {
         let users = await usersModel.find().lean()
         return users;
     }
 
-    getById = async(id) => {
+    getUserById = async(id) => {
         let user = await usersModel.findOne({_id: id})
         return user;
     }
 
-    getByEmail = async (email) => {
+    getUserByEmail = async (email) => {
         let user = await usersModel.findOne({ email: email })
         return user
     }
 
-    getByEmailAndPass = async (email, password) => {
+    getUserByEmailAndPass = async (email, password) => {
         let user = usersModel.findOne({ email: email, password: password })
         return user
     }
 
-    addUser = async (user) => {
+    createUser = async (user) => {
         let result = await usersModel.create(user)
         return result
     }
 
     updateUser = async (id, user) => {
         let result = []
-        const exist = await this.getById(id)
+        const exist = await this.getUserById(id)
         if(exist)
             result = await usersModel.updateOne({_id: id}, user)
         else
@@ -43,7 +43,7 @@ export default class Users{
 
     updateUserbyEmail = async (email, user) => {
         let result = []
-        const exist = await this.getByEmail(email)
+        const exist = await this.getUserByEmail(email)
         if(exist)
             result = await usersModel.updateOne({email: email}, user)
         else
@@ -53,7 +53,7 @@ export default class Users{
 
     deleteUser = async (id) => {
         let result = []
-        const exist = await this.getById(id)
+        const exist = await this.getUserById(id)
         if(exist)
             result = await usersModel.deleteOne({_id: id})
         else

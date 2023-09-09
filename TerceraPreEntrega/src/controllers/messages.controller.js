@@ -10,6 +10,15 @@ class MessageController{
             res.status(400).send({status:"Error", error: `Failed to load messages. ${e.message}`})
         }
     }
+    getMessageById = async (req,res) =>{
+        try{
+            const id = req.params.pid
+            const result = await messageService.getMessageById(id)
+            res.send({ status:"success", payload: result})
+        }catch(e){
+            res.status(400).send({status:"Error", error: `Failed to load messages. ${e.message}`})
+        }
+    }
 
     createMessage = async(req,res)=>{
         try{

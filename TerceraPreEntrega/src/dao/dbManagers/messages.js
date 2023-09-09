@@ -5,17 +5,17 @@ export default class Messages{
     constructor(){
         //console.log('Trabajando con mensajes en mongoDB')
     }
-    getAll = async() => {
+    getMessages = async() => {
         let messages = await messagesModel.find().lean()
         return messages;
     }
 
-    getById = async(id) => {
+    getMessageById = async(id) => {
         let message = await messagesModel.find({_id: id})
         return message;
     }
 
-    addMessage = async (message) => {
+    createMessage = async (message) => {
         let result = await messagesModel.create(message)
         return result;
     }
