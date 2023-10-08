@@ -1,10 +1,9 @@
-import supertest from 'supertest';
-import chai from 'chai';
-import mongoose from 'mongoose';
-
-import cartModel from '../src/dao/models/carts.js';
-import userModel from '../src/dao/models/users.js';
-import productsModel from '../src/dao/models/products.js';
+import supertest from 'supertest'
+import chai from 'chai'
+import mongoose from 'mongoose'
+import cartModel from '../src/dao/models/carts.models.js';
+import userModel from '../src/dao/models/users.models.js';
+import productsModel from '../src/dao/models/products.models.js';
 
 const expect = chai.expect;
 const requester = supertest('http://localhost:8080');
@@ -154,7 +153,7 @@ describe("Pruebas con supertest", () => {
         })
     })
 
-    describe("Pruebas para carts", () => { // GET Add product Delete product
+    describe("Pruebas para carts", () => { 
 
         it('1. GET /api/carts', async() => {
             const response = await requester.get('/api/carts');
@@ -168,7 +167,7 @@ describe("Pruebas con supertest", () => {
             expect(response._body).to.have.property('message');
         })
 
-        it('3. PUT /api/carts/:cid', async() => { // Por motivos de comodidad del test, se modifica el producto desde aca directo a la DB y no en una petición del servidor
+        it('3. PUT /api/carts/:cid', async() => { 
             await productsModel.updateOne({_id: pid}, {$set: {owner: "pacoPerez@gmail.com"}});
 
             const response = await requester.put(`/api/carts/${cid}`).send([{_id: pid, quantity: 1}]).set('Cookie', [coderCookie]);
