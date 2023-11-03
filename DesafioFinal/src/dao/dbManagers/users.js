@@ -8,7 +8,7 @@ export default class Users{
         //console.log('Trabajando con usuarios en mongoDB')
     }
 
-    getusers= async() => {
+    getUsers= async() => {
         let users = await usersModel.find().lean()
         return users;
     }

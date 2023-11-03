@@ -7,9 +7,9 @@ export default class UsersRepository {
 
     getUsers = async () => {
         let result = await this.dao.getUsers()
-        let userDto = new usersDto(result)
-        let users = userDto.getUsers()
-        return users
+        //let userDto = new usersDto(result)
+        //let users = userDto.getUsers()
+        return result
     }
 
     getUserById = async (uid) => {
