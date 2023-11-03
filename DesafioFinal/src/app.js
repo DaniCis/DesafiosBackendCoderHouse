@@ -86,16 +86,16 @@ io.on('connection',socket=>{
 
 const swaggerOptions={
   definition:{
-      openapi: '3.0.0',
-      info:{
-          title:' Documentacion de las APIs',
-          description: ' Información de rutas para productos y carritos de compras',
-          version: '1.0.0',
-          contact:{
-              name: "Daniela Cisneros",
-              url:'https://github.com/DaniCis'
-          }
+    openapi: '3.0.0',
+    info:{
+      title:' Documentacion de las APIs',
+      description: ' Información de rutas para productos y carritos de compras',
+      version: '1.0.0',
+      contact:{
+        name: "Daniela Cisneros",
+        url:'https://github.com/DaniCis'
       }
+    }
   },
   apis:[`./docs/*.yaml`]
 }

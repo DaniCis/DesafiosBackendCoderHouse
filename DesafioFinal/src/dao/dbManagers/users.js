@@ -1,5 +1,6 @@
 import { createHash } from '../../utils/bycript.js';
 import usersModel from '../models/users.models.js'
+import nodemailer from 'nodemailer'
 
 export default class Users{
 
@@ -60,6 +61,42 @@ export default class Users{
         else
             result = false
         return result
+    }
+
+    deleteInactiveUsers = async () =>{
+        try {
+            const idleTimeAllowed = new Date(Date.now() - 2 * 24 * 60 * 60 * 1000)
+            const deletedUsers = await this.model.find({ last_connection: { $lt: idleTimeAllowed } });
+            await usersModel.deleteMany({ last_connection: { $lt: idleTimeAllowed } });
+
+            for (const user of deletedUsers) {
+                const mailOptions = {
+                    from: 'Ecommerce',
+                    to: user.email,
+                    subject: 'Se ha eliminado tu cuenta debido a inactividad',
+                    html: `
+                    <div style="background-color: black; color: green; display: flex; flex-direction: column; justify-content: center;  align-items: center;">
+                    <h2>Tu cuenta ha sido eliminada!</h2>
+                    </div>`
+                }
+                const transporter = nodemailer.createTransport({
+                    host: 'smtp.gmail.com',
+                    port: 465,
+                    secure: true,
+                    auth: {
+                        user: process.env.MAILING_USER,
+                        pass: process.env.MAILING_PASSWORD,
+                        authMethod: 'LOGIN',
+                    },
+                })
+
+                await transporter.sendMail(mailOptions);
+            }   
+            return true
+        } catch (error) {
+            req.logger.error("El mail del usuario no es válido");
+            return false
+        }
     }
 
     swapRole = async(id)=>{

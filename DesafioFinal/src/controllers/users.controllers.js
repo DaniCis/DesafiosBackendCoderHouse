@@ -67,6 +67,15 @@ class UserController{
         }
     }
 
+    deleteInactiveUsers = async (req, res) => {
+        try {
+            let result = await userService.deleteInactiveUsers()
+            res.sendSuccess(result)
+        } catch (error) {
+            res.status(400).send({status:"Error", error: `Failed to delete inactive users. ${error.message}`})
+        }
+    }
+
     swapUserRole = async(req,res)=>{
         try{
             const { uid } = req.params

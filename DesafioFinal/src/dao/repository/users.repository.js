@@ -47,6 +47,11 @@ export default class UsersRepository {
         return result
     }
 
+    deleteInactiveUsers = async() =>{
+        let result = await this.dao.deleteInactiveUsers()
+        return result
+    }
+
     swapRole = async(uid)=>{
         let result = await this.dao.swapRole(uid)
         return result
